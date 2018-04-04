@@ -23,6 +23,19 @@ void encodeFlowMap(const Mat& flow_map_x, const Mat& flow_map_y,
                    vector<uchar>& encoded_x, vector<uchar>& encoded_y,
                    int bound, bool to_jpg=true);
 
+void convertFlowToImage16bit(const Mat &flow_x, const Mat &flow_y, Mat &img_x, Mat &img_y,
+                        double lowerBound, double higherBound);
+void encodeFlowMap16bit(const Mat& flow_map_x, const Mat& flow_map_y,
+                   vector<uchar>& encoded_x, vector<uchar>& encoded_y,
+                   int bound, bool to_jp2=true);
+
+void convertFlowToImages(const Mat &flow_x, const Mat &flow_y, Mat &img_xh, Mat &img_xl,
+                        Mat &img_yh, Mat &img_yl, double lowerBound, double higherBound);
+void encodeFlowMaps(const Mat& flow_map_x, const Mat& flow_map_y,
+                   vector<uchar>& encoded_xh, vector<uchar>& encoded_xl,
+                   vector<uchar>& encoded_yh, vector<uchar>& encoded_yl,
+                   int bound, bool to_jp2=true);
+
 inline void initializeMats(const Mat& frame,
                            Mat& capture_image, Mat& capture_gray,
                            Mat& prev_image, Mat& prev_gray){

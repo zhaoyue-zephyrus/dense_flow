@@ -35,10 +35,14 @@ int main(int argc, char** argv){
     int new_height = cmd.get<int>("newHeight");
     int new_width = cmd.get<int>("newWidth");
 
-	vector<vector<uchar> > out_vec_x, out_vec_y, out_vec_img;
+	//vector<vector<uchar> > out_vec_x, out_vec_y, out_vec_img;
+	std::vector<std::vector<uchar> > out_vec_x, out_vec_y, out_vec_img;
+	std::vector<std::vector<uchar> > out_vec_xh, out_vec_xl, out_vec_yh, out_vec_yl;
 
+	//calcDenseFlowGPU(vidFile, bound, type, step, device_id,
+	//				 out_vec_x, out_vec_y, out_vec_img, new_width, new_height);
 	calcDenseFlowGPU(vidFile, bound, type, step, device_id,
-					 out_vec_x, out_vec_y, out_vec_img, new_width, new_height);
+			 out_vec_xh, out_vec_xl, out_vec_yh, out_vec_yl, out_vec_img, new_width, new_height);
 
 	if (output_style == "dir") {
 		writeImages(out_vec_x, xFlowFile);
@@ -46,8 +50,12 @@ int main(int argc, char** argv){
 		writeImages(out_vec_img, imgFile);
 	}else{
 //		LOG(INFO)<<"Writing results to Zip archives";
-		writeZipFile(out_vec_x, "x_%05d.jpg", xFlowFile+".zip");
-		writeZipFile(out_vec_y, "y_%05d.jpg", yFlowFile+".zip");
+		//writeZipFile(out_vec_x, "x_%05d.jpg", xFlowFile+".zip");
+		//writeZipFile(out_vec_y, "y_%05d.jpg", yFlowFile+".zip");
+		writeZipFile(out_vec_xh, "xh_%05d.jpg", xFlowFile+"h.zip");
+		writeZipFile(out_vec_xl, "xl_%05d.jpg", xFlowFile+"l.zip");
+		writeZipFile(out_vec_yh, "yh_%05d.jpg", yFlowFile+"h.zip");
+		writeZipFile(out_vec_yl, "yl_%05d.jpg", yFlowFile+"l.zip");
 		writeZipFile(out_vec_img, "img_%05d.jpg", imgFile+".zip");
 	}
 
