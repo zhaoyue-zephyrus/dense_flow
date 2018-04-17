@@ -20,6 +20,7 @@ int main(int argc, char** argv){
 			"{ o  | out | zip | output style}"
 			"{ w  | newWidth | 0 | output style}"
 			"{ h  | newHeight | 0 | output style}"
+			"{ r  | reverse   | 0 | if calculate flow reversely }"
 		};
 
 	CommandLineParser cmd(argc, argv, keys);
@@ -34,11 +35,12 @@ int main(int argc, char** argv){
     int step = cmd.get<int>("step");
     int new_height = cmd.get<int>("newHeight");
     int new_width = cmd.get<int>("newWidth");
+    int if_reverse = cmd.get<int>("reverse");
 
 	vector<vector<uchar> > out_vec_x, out_vec_y, out_vec_img;
 
 	calcDenseFlowGPU(vidFile, bound, type, step, device_id,
-					 out_vec_x, out_vec_y, out_vec_img, new_width, new_height);
+					 out_vec_x, out_vec_y, out_vec_img, new_width, new_height, if_reverse);
 
 	if (output_style == "dir") {
 		writeImages(out_vec_x, xFlowFile);
@@ -46,8 +48,13 @@ int main(int argc, char** argv){
 		writeImages(out_vec_img, imgFile);
 	}else{
 //		LOG(INFO)<<"Writing results to Zip archives";
-		writeZipFile(out_vec_x, "x_%05d.jpg", xFlowFile+".zip");
-		writeZipFile(out_vec_y, "y_%05d.jpg", yFlowFile+".zip");
+                if (!if_reverse) {
+		  writeZipFile(out_vec_x, "x_%05d.jpg", xFlowFile+".zip");
+		  writeZipFile(out_vec_y, "y_%05d.jpg", yFlowFile+".zip");
+                } else {
+		  writeZipFile(out_vec_x, "xr_%05d.jpg", xFlowFile+".zip");
+		  writeZipFile(out_vec_y, "yr_%05d.jpg", yFlowFile+".zip");
+                }
 		writeZipFile(out_vec_img, "img_%05d.jpg", imgFile+".zip");
 	}
 

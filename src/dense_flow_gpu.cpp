@@ -10,7 +10,7 @@ void calcDenseFlowGPU(string file_name, int bound, int type, int step, int dev_i
                       vector<vector<uchar> >& output_x,
                       vector<vector<uchar> >& output_y,
                       vector<vector<uchar> >& output_img,
-                      int new_width, int new_height){
+                      int new_width, int new_height, int if_reverse){
     VideoCapture video_stream(file_name);
     CHECK(video_stream.isOpened())<<"Cannot open video stream \""
                                   <<file_name
@@ -64,8 +64,13 @@ void calcDenseFlowGPU(string file_name, int bound, int type, int step, int dev_i
                 cv::resize(capture_frame, capture_image, new_size);
             
             cvtColor(capture_image, capture_gray, CV_BGR2GRAY);
-            d_frame_0.upload(prev_gray);
-            d_frame_1.upload(capture_gray);
+            if (if_reverse) {
+              d_frame_0.upload(capture_gray);
+              d_frame_1.upload(prev_gray);
+            } else {
+              d_frame_0.upload(prev_gray);
+              d_frame_1.upload(capture_gray);
+            }
 
             switch(type){
                 case 0: {
