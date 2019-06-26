@@ -52,11 +52,11 @@ public:
         initializeMats(input_frame, prev_frame, prev_gray, next_frame, next_gray);
 
         memcpy(prev_frame.data, first_data, bp::len(frames[0]));
-        cvtColor(prev_frame, prev_gray, CV_BGR2GRAY);
+        cvtColor(prev_frame, prev_gray, COLOR_BGR2GRAY);
         for (int idx = 1; idx < bp::len(frames); idx++){
             const char* this_data = ((const char*)bp::extract<const char*>(frames[idx]));
             memcpy(next_frame.data, this_data, bp::len(frames[0]));
-            cvtColor(next_frame, next_gray, CV_BGR2GRAY);
+            cvtColor(next_frame, next_gray, COLOR_BGR2GRAY);
 
             d_frame_0.upload(prev_gray);
             d_frame_1.upload(next_gray);
@@ -117,11 +117,11 @@ public:
         human_mask = Mat::ones(input_frame.size(), CV_8UC1);
 
         memcpy(prev_frame.data, first_data, bp::len(frames[0]));
-        cvtColor(prev_frame, prev_gray, CV_BGR2GRAY);
+        cvtColor(prev_frame, prev_gray, COLOR_BGR2GRAY);
         for (int idx = 1; idx < bp::len(frames); idx++){
             const char* this_data = ((const char*)bp::extract<const char*>(frames[idx]));
             memcpy(next_frame.data, this_data, bp::len(frames[0]));
-            cvtColor(next_frame, next_gray, CV_BGR2GRAY);
+            cvtColor(next_frame, next_gray, COLOR_BGR2GRAY);
 
             d_frame_0.upload(prev_gray);
             d_frame_1.upload(next_gray);

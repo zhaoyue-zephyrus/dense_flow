@@ -54,7 +54,7 @@ void calcDenseFlowGPU(string file_name, int bound, int type, int step, int dev_i
                 prev_gray.create(new_size, CV_8UC1);
                 cv::resize(capture_frame, prev_image, new_size);
             }
-            cvtColor(prev_image, prev_gray, CV_BGR2GRAY);
+            cvtColor(prev_image, prev_gray, COLOR_BGR2GRAY);
             initialized = true;
             for(int s = 0; s < step; ++s){
                 video_stream >> capture_frame;
@@ -67,7 +67,7 @@ void calcDenseFlowGPU(string file_name, int bound, int type, int step, int dev_i
             else
                 cv::resize(capture_frame, capture_image, new_size);
             
-            cvtColor(capture_image, capture_gray, CV_BGR2GRAY);
+            cvtColor(capture_image, capture_gray, COLOR_BGR2GRAY);
             d_frame_0.upload(prev_gray);
             d_frame_1.upload(capture_gray);
 
@@ -166,7 +166,7 @@ void calcDenseFlowPureGPU(std::string file_name, int bound, int type, int step, 
             prev_gray.create(capture_frame.size(), CV_8UC1);
 
             capture_frame.copyTo(prev_image);
-            cvtColor(prev_image, prev_gray, CV_BGR2GRAY);
+            cvtColor(prev_image, prev_gray, COLOR_BGR2GRAY);
             initialized = true;
 
             for (int s = 0; s < step; ++s){
@@ -174,7 +174,7 @@ void calcDenseFlowPureGPU(std::string file_name, int bound, int type, int step, 
             }
         }else {
             capture_frame.copyTo(capture_image);
-            cvtColor(capture_image, capture_gray, CV_BGR2GRAY);
+            cvtColor(capture_image, capture_gray, COLOR_BGR2GRAY);
 
             switch(type){
                 case 0: {

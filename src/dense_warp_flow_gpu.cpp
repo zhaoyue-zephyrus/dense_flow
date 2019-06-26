@@ -65,7 +65,7 @@ void calcDenseWarpFlowGPU(string file_name, int bound, int type, int step, int d
 			initializeMats(capture_frame, capture_image, capture_gray,
 						   prev_image, prev_gray);
 			capture_frame.copyTo(prev_image);
-			cvtColor(prev_image, prev_gray, CV_BGR2GRAY);
+			cvtColor(prev_image, prev_gray, COLOR_BGR2GRAY);
 
 			//detect key points
 			human_mask = Mat::ones(capture_frame.size(), CV_8UC1);
@@ -81,7 +81,7 @@ void calcDenseWarpFlowGPU(string file_name, int bound, int type, int step, int d
 			}
 		}else {
 			capture_frame.copyTo(capture_image);
-			cvtColor(capture_image, capture_gray, CV_BGR2GRAY);
+			cvtColor(capture_image, capture_gray, COLOR_BGR2GRAY);
 			d_frame_0.upload(prev_gray);
 			d_frame_1.upload(capture_gray);
 
